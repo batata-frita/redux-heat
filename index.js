@@ -7,7 +7,13 @@ function onChange(selector, callback) {
 
       if (newState !== currentState) {
         currentState = newState
-        return callback(store, newState)
+        let maybePromise = callback(store, newState)
+
+        if (maybePromise instanceof Promise) {
+          return maybePromise.then(action => store.dispatch(action))
+        } else {
+          return maybePromise
+        }
       }
     }
   }

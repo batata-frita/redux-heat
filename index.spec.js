@@ -56,6 +56,25 @@ describe('onChange', () => {
     state.a = 'value'
     expect(effect()).toBe(1)
   })
+
+  describe('when the return value of the callback is a Promise', () => {
+    it('dispatches an action with the value that the Promise holds', () => {
+      const state = { a: false }
+      const store = {
+        dispatch: jest.fn(),
+        getState: () => {
+          return state
+        },
+      }
+      const selector = state => state.a
+      const callback = () => new Promise((resolve) => resolve('action'))
+      const effect = onChange(selector, callback)(store)
+
+      state.a = 'value'
+      return effect()
+        .then(() => expect(store.dispatch).toHaveBeenCalledWith('action'))
+    })
+  })
 })
 
 describe('onTransitionTo', () => {
