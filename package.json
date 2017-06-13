@@ -1,7 +1,7 @@
 {
   "name": "redux-heat",
   "version": "0.0.1",
-  "description": "",
+  "description": "Redux side-effects as a function of state.",
   "main": "index.js",
   "scripts": {
     "test": "jest",
@@ -9,15 +9,15 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/pirelenito/redux-heat.git"
+    "url": "git+https://github.com/batata-frita/redux-heat.git"
   },
   "keywords": [],
   "author": "",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/pirelenito/redux-heat/issues"
+    "url": "https://github.com/batata-frita/redux-heat/issues"
   },
-  "homepage": "https://github.com/pirelenito/redux-heat#readme",
+  "homepage": "https://github.com/batata-frita/redux-heat#readme",
   "dependencies": {
     "jest": "^20.0.4",
     "prettier": "^1.4.4"
