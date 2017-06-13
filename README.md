@@ -1,13 +1,15 @@
-# redux-heat
+# redux-heat 🔥
 
 [![Build Status](https://travis-ci.org/pirelenito/redux-heat.svg)](https://travis-ci.org/pirelenito/redux-heat)
 [![npm version](https://badge.fury.io/js/redux-heat.svg)](https://badge.fury.io/js/redux-heat)
 
 [Redux](http://redux.js.org/) side-effects as a function of state.
 
-- No new concept to understand ([Sagas](https://github.com/yelouafi/redux-saga), [Observables](https://redux-observable.js.org/)) it is just [Promises](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise);
-- It is **not** a [middleware](http://redux.js.org/docs/advanced/Middleware.html);
-- Follow the same pattern as React.
+- Reducers and action creators as pure functions;
+- Based on [Promises](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise), so it is not new concept to understand (like [Sagas](https://github.com/yelouafi/redux-saga) and [Observables](https://redux-observable.js.org/));
+- It is **not** a [middleware](http://redux.js.org/docs/advanced/Middleware.html), so setup and testing are super easy;
+- Follows the same pattern as React (decide what to do based on the state and not the actions);
+- It is supper tiny (really, check the source).
 
 ## Install
 
