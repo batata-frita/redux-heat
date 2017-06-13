@@ -9,7 +9,7 @@ function onChange(selector, callback) {
 
       if (newSelectorValue !== currentSelectorValue) {
         currentSelectorValue = newSelectorValue
-        return callback(store.getState(), newSelectorValue)
+        return callback(state, newSelectorValue)
       } else {
         return Promise.resolve()
       }
@@ -17,9 +17,10 @@ function onChange(selector, callback) {
   }
 }
 
-function onTransitionTo(selector, callback) {
+function onChangeToTruthy(selector, callback) {
   return onChange(selector, function(state, selectorValue) {
     if (selectorValue) return callback(state, selectorValue)
+    else return Promise.resolve()
   })
 }
 
@@ -30,7 +31,9 @@ function subscribe(store, effects) {
     })
     .map(function(effectWithInitialState) {
       return store.subscribe(function() {
-        effectWithInitialState(store.getState()).then(action => store.dispatch(action))
+        return effectWithInitialState(store.getState()).then(action => {
+          if (action != null) store.dispatch(action)
+        })
       })
     })
 
@@ -39,4 +42,4 @@ function subscribe(store, effects) {
   }
 }
 
-module.exports = { onChange: onChange, onTransitionTo: onTransitionTo, subscribe: subscribe }
+module.exports = { onChange: onChange, onChangeToTruthy: onChangeToTruthy, subscribe: subscribe }

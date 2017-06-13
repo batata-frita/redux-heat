@@ -19,6 +19,7 @@
   },
   "homepage": "https://github.com/pirelenito/redux-heat#readme",
   "dependencies": {
-    "jest": "^20.0.4"
+    "jest": "^20.0.4",
+    "prettier": "^1.4.4"
   }
 }
