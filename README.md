@@ -1,6 +1,6 @@
 # redux-heat 🔥
 
-[![Build Status](https://travis-ci.org/pirelenito/redux-heat.svg)](https://travis-ci.org/pirelenito/redux-heat)
+[![Build Status](https://travis-ci.org/batata-frita/redux-heat.svg)](https://travis-ci.org/batata-frita/redux-heat)
 [![npm version](https://badge.fury.io/js/redux-heat.svg)](https://badge.fury.io/js/redux-heat)
 
 [Redux](http://redux.js.org/) side-effects as a function of state.
