@@ -1,6 +1,6 @@
 {
   "name": "redux-heat",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Redux side-effects as a function of state.",
   "main": "index.js",
   "scripts": {
