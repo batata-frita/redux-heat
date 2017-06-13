@@ -1,22 +1,42 @@
 function onChange(selector, callback) {
-  return function(store) {
-    let currentState = selector(store.getState())
+  var currentSelectorValue
 
-    return function() {
-      let newState = selector(store.getState())
+  return function(state) {
+    currentSelectorValue = selector(state)
 
-      if (newState !== currentState) {
-        currentState = newState
-        return callback(store, newState)
+    return function(state) {
+      var newSelectorValue = selector(state)
+
+      if (newSelectorValue !== currentSelectorValue) {
+        currentSelectorValue = newSelectorValue
+        return callback(store.getState(), newSelectorValue)
+      } else {
+        return Promise.resolve()
       }
     }
   }
 }
 
 function onTransitionTo(selector, callback) {
-  return onChange(selector, function(store, value) {
-    if (value) return callback(store, value)
+  return onChange(selector, function(state, selectorValue) {
+    if (selectorValue) return callback(state, selectorValue)
   })
 }
 
-module.exports = { onTransitionTo: onTransitionTo, onChange: onChange }
+function subscribe(store, effects) {
+  const unsubscribers = effects
+    .map(function(effect) {
+      return effect(store.getState())
+    })
+    .map(function(effectWithInitialState) {
+      return store.subscribe(function() {
+        effectWithInitialState(store.getState()).then(action => store.dispatch(action))
+      })
+    })
+
+  return function() {
+    unsubscribers.forEach(unsubscriber => unsubscriber())
+  }
+}
+
+module.exports = { onChange: onChange, onTransitionTo: onTransitionTo, subscribe: subscribe }
