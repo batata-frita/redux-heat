@@ -1,142 +1,25 @@
-const { onChange, onChangeToTruthy, subscribe } = require('.')
-
-describe('onChange', () => {
-  describe('when the result of the selector changed', () => {
-    it('calls the callback and returns the promise within it', async () => {
-      const initialState = {
-        value: 1,
-      }
-      const nextState = {
-        value: 5,
-      }
-      const selector = ({ value }) => value
-      const effect = onChange(selector, async ({ value }) => ({
-        type: 'NEXT_VALUE',
-        payload: value,
-      }))
-
-      const initializedEffect = effect(initialState)
-
-      const action = await initializedEffect(nextState)
-
-      expect(action).toEqual({ type: 'NEXT_VALUE', payload: 5 })
-    })
-  })
-
-  describe('when the result of the selector didn’t change', () => {
-    it('does not run the callback, and returns an empty Promise', async () => {
-      const initialState = {
-        value: 1,
-      }
-      const nextState = {
-        value: 1,
-      }
-      const selector = ({ value }) => value
-      const effect = onChange(selector, async ({ value }) => ({
-        type: 'NEXT_VALUE',
-        payload: value,
-      }))
-
-      const initializedEffect = effect(initialState)
-
-      const action = await initializedEffect(nextState)
-
-      expect(action).toEqual(undefined)
-    })
-  })
-})
-
-describe('onChangeToTruthy', () => {
-  describe('when the result of the selector changes to truthy', () => {
-    it('calls the callback and returns the promise within it', async () => {
-      const initialState = {
-        value: false,
-      }
-      const nextState = {
-        value: true,
-      }
-      const selector = ({ value }) => value
-      const effect = onChangeToTruthy(selector, async ({ value }) => ({
-        type: 'NEXT_VALUE',
-        payload: value,
-      }))
-
-      const initializedEffect = effect(initialState)
-
-      const action = await initializedEffect(nextState)
-
-      expect(action).toEqual({ type: 'NEXT_VALUE', payload: true })
-    })
-  })
-
-  describe('when the result of the selector changes to falsy', () => {
-    it('does not run the callback, and returns an empty Promise', async () => {
-      const initialState = {
-        value: true,
-      }
-      const nextState = {
-        value: false,
-      }
-      const selector = ({ value }) => value
-      const effect = onChangeToTruthy(selector, async ({ value }) => ({
-        type: 'NEXT_VALUE',
-        payload: value,
-      }))
-
-      const initializedEffect = effect(initialState)
-
-      const action = await initializedEffect(nextState)
-
-      expect(action).toEqual(undefined)
-    })
-  })
-
-  describe('when the result of the selector does not change', () => {
-    it('does not run the callback, and returns an empty Promise', async () => {
-      const initialState = {
-        value: true,
-      }
-      const nextState = {
-        value: true,
-      }
-      const selector = ({ value }) => value
-      const effect = onChangeToTruthy(selector, async ({ value }) => ({
-        type: 'NEXT_VALUE',
-        payload: value,
-      }))
-
-      const initializedEffect = effect(initialState)
-
-      const action = await initializedEffect(nextState)
-
-      expect(action).toEqual(undefined)
-    })
-  })
-})
+const { subscribe } = require('.')
 
 describe('subscribe', () => {
-  it('wire the effects to the store', async () => {
-    const initialState = { value: 1 }
-    const nextState = { value: 2 }
-    let currentState = initialState
-    const wiredEffects = []
+  it('wire the effects to the store, passing the state and dispatching actions', async () => {
+    const storeState = { importantData: false }
     const unsubscriber = jest.fn()
     const store = {
-      getState: () => currentState,
+      getState: () => storeState,
       subscribe: jest.fn(effect => {
         wiredEffects.push(effect)
         return unsubscriber
       }),
       dispatch: jest.fn(),
     }
-    let action = { type: 'DUMMY_ACTION' }
 
-    const initializedEffectStub = jest.fn(async () => action)
-    const effectStub = jest.fn(() => initializedEffectStub)
+    const effect = state$ =>
+      state$.filter(state => state.importantData).map(() => {
+        type: 'DUMMY_ACTION'
+      })
 
     // Set up the effect in the store
-    const unsubscribe = subscribe(store, [effectStub])
-
+    const unsubscribe = subscribe(store, [effect])
     expect(effectStub).toHaveBeenCalledWith(initialState)
 
     // Update the state in the store and notify the subscribers

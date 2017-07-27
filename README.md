@@ -38,3 +38,8 @@ const fetchUserEffect = onChange(getUserId, async (state, userId) => {
 // Then subscribe the effect to the Redux store
 subscribe(reduxStore, [fetchUserEffect])
 ```
+
+@redux-heat/promise
+@redux-heat/most
+@redux-heat/rxjs
+...
