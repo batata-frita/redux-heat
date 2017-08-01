@@ -1,20 +1,25 @@
-function subscribe(Observable, store, effects) {
-  const state$ = new Observable(observer => {
-    const unsubscribe = store.subscribe(() => observer.next(store.getState()))
-    return unsubscribe
+const most = require('most')
+
+module.exports = function subscribe(store, ...heats) {
+  const state$ = new most.Stream({
+    run: (sink, scheduler) => {
+      const unsubscribe = store.subscribe(() => {
+        sink.event(scheduler.now(), store.getState())
+      })
+
+      return {
+        dispose: () => {
+          unsubscribe()
+        },
+      }
+    },
   })
 
-  const unsubscribers = effects.map(effect => effect(state$).subscribe(store.dispatch))
+  const action$ = most.mergeArray(heats.map(heat => heat(state$)))
 
-  return function() {
-    unsubscribers.forEach(unsubscriber => unsubscriber())
-  }
+  const subscription = action$.subscribe({
+    next: action => store.dispatch(action),
+  })
+
+  return () => subscription.unsubscribe()
 }
-
-module.exports = { subscribe: subscribe }
-
-// using it...
-
-const effect = state$ => state.$filter(selector).map(() => actionCreator())
-
-subscribe(Observable, store, [effect])
