@@ -16,7 +16,7 @@
 Add it as a dependency in your project:
 
 ```bash
-npm add redux-heat
+npm install --save redux-heat most
 ```
 
 ## Usage
