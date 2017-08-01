@@ -3,3 +3,12 @@ node_js:
   - "8"
 # send builds to the container-based infrastructure
 sudo: false
+
+deploy:
+  provider: npm
+  email: paulo@ragonha.me
+  api_key:
+    secure: uwtKe6c+QPSOi7QLCGmVw5cIxl4XDAhaxVWKmRT/GA5CUALjY7ZY1i9Kn6mjcIcvW9HxATU51BASSfq3otWoSJnJB+J3E0kMHJTDW5JMYbQoeu0jRz6ny/FnQoNGvtd3GEAxBkRLCmE0bUzA+1hY+ZxTF/k+zcn2jWcdZk6VGsE=
+  on:
+    tags: true
+    repo: batata-frita/redux-heat
