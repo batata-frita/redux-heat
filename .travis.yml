@@ -1,14 +1,12 @@
 language: node_js
 node_js:
-  - "8"
-# send builds to the container-based infrastructure
+- '8'
 sudo: false
-
 deploy:
   provider: npm
   email: paulo@ragonha.me
   api_key:
-    secure: uwtKe6c+QPSOi7QLCGmVw5cIxl4XDAhaxVWKmRT/GA5CUALjY7ZY1i9Kn6mjcIcvW9HxATU51BASSfq3otWoSJnJB+J3E0kMHJTDW5JMYbQoeu0jRz6ny/FnQoNGvtd3GEAxBkRLCmE0bUzA+1hY+ZxTF/k+zcn2jWcdZk6VGsE=
+    secure: MTXMky5mcIybzPvPyHLmq8/ZJSbbGqUNj2xYwK9ALXn2n4t+RldvEyKeepdGVPZdb8VcUXdRUp3rjLHj19aoL3sOXRQdfdyzksWXmM+1QbsZ1ky/UqcJzMJ4nLslsNqiIiJMCLoCkpyZRYD+xOSRaCnwSsiCjQuLzzu0oLgl+BgOrONBaXNBFv8tqx9tPnhGGAaw/GhFR++or/X0hSy4OMZP+BJ09rZSLBL7RXsc6ZNttqC7cvU5ZaDJDIcBwYXDc3G4/aLQcCqQoHOXTx1rZrgAvYUkp1MD0gJAFLMO4ltR+drhTRG1KDIDbgspALAUtifMQeL+5OiR7R45OQ7NE1J7CMHQCZEq7IvlPHnrZWcfNQ7Y8BZqUGoH6HMjtTQprTmf1eHfk53qclcielWHvoXY1HjsFM9EtjjHvrHmMO7CS5cOeJWQIpU7sFaRftalEA4h+CdP9pBSvECYpDwm6QaSqbRFnIg0hV0rVF6tK74qh0w6lM6TRwpPl5NPzQRD48+iSIZHFRDcl3FIWHNz+p8Cg4ousYSWsmJby8E66CHmmbdqeDPae7GCgVF7NVTh7DuO31QPY6NeSYeHuvIsxlJtXnTlFUDpx5wQnECOXCjFiPaqdizxoedWlZhiQLnXKYkttUR8cp52rqby2n3+FBXiUh/+mqQ9vg0nWUju1y0=
   on:
     tags: true
     repo: batata-frita/redux-heat
