@@ -19,7 +19,7 @@ describe('subscribe', () => {
         type: 'ACTION',
       }))
 
-    subscribe(store, heat)
+    subscribe(store, [heat])
     storeSubscriptions.forEach(subscription => subscription())
 
     expect(store.dispatch).toHaveBeenCalledTimes(1)

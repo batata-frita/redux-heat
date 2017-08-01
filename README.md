@@ -43,5 +43,5 @@ const fetchUserHeat = state$ =>
     )
 
 // Then subscribe the effect to the Redux store
-subscribe(reduxStore, fetchUserHeat)
+subscribe(reduxStore, [fetchUserHeat])
 ```

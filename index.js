@@ -1,25 +1,33 @@
-const most = require('most')
+var most = require('most')
 
-module.exports = function subscribe(store, ...heats) {
-  const state$ = new most.Stream({
+module.exports = function subscribe(store, heats) {
+  var state$ = new most.Stream({
     run: (sink, scheduler) => {
-      const unsubscribe = store.subscribe(() => {
+      var unsubscribe = store.subscribe(function() {
         sink.event(scheduler.now(), store.getState())
       })
 
       return {
-        dispose: () => {
+        dispose: function() {
           unsubscribe()
         },
       }
     },
   })
 
-  const action$ = most.mergeArray(heats.map(heat => heat(state$)))
+  var action$ = most.mergeArray(
+    heats.map(function(heat) {
+      return heat(state$)
+    })
+  )
 
-  const subscription = action$.subscribe({
-    next: action => store.dispatch(action),
+  var subscription = action$.subscribe({
+    next: function(action) {
+      store.dispatch(action)
+    },
   })
 
-  return () => subscription.unsubscribe()
+  return function() {
+    subscription.unsubscribe()
+  }
 }
