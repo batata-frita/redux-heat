@@ -11,6 +11,8 @@ export default effect$ =>
     .map(pick(['fn', 'args', 'onValue', 'onError']))
     .skipRepeatsWith(equals)
     .flatMap(({ fn, args = [], onValue = noop, onError = noop }) =>
-      toObservable(fn.apply(null, args)).map(onValue).recoverWith(e => of(onError(e)))
+      toObservable(fn.apply(null, args))
+        .map(onValue)
+        .recoverWith(e => of(onError(e)))
     )
     .filter(x => x)
