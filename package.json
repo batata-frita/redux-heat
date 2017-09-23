@@ -12,6 +12,9 @@
     "test:unit": "jest",
     "test:unit:watch": "jest --watchAll"
   },
+  "files": [
+    "lib"
+  ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/batata-frita/redux-heat.git"
